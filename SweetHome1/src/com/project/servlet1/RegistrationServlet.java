@@ -20,14 +20,15 @@ public class RegistrationServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("in registration servlet");
+		
 		String fullname = request.getParameter("fullname");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
 		String confpassword = request.getParameter("confpass");
-		String userarr[] = request.getParameterValues("usertype");
-		String usertype = userarr[0];
+		String usertype = request.getParameter("usertype");
+		/*String userarr[] = request.getParameterValues("usertype");
+		String usertype = userarr[0];*/
 		String email = request.getParameter("email");
 		String contact = request.getParameter("contact");
 		int match=0;
@@ -57,24 +58,21 @@ public class RegistrationServlet extends HttpServlet {
 		}
 		else
 		{
+			DatabaseController db = new DatabaseController();
+			try {
+				
+				boolean a=db.addUser(fullname, usertype, username, confpassword, contact, email);
+				
+				 response.sendRedirect("Login_v3/login.html");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
-	
-		Connection con = ConnectionProvider.getConnection();
-		try {
-			PreparedStatement ps = con.prepareStatement("insert into Users values(?,?,?,?,?,?)");
-			ps.setString(1, fullname);
-			ps.setString(2, usertype);
-			ps.setString(3, username);
-			ps.setString(4, password);
-			ps.setString(5, contact);
-			ps.setString(6, email);
-			ps.executeQuery();
-        response.sendRedirect("Login_v3/login.html");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
+       
+		} 
+		
+		
 
 	}
 

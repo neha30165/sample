@@ -24,33 +24,18 @@ public class LoginServlet extends HttpServlet {
 		String password=request.getParameter("password");
 		String usertype = null;
 	Connection con =ConnectionProvider.getConnection();
-	try {
-		PreparedStatement ps =con.prepareStatement("select * from Users where username=? and password=?");
-		ps.setString(1, username);
-		ps.setString(2,password);
-		ResultSet rs = ps.executeQuery();
-		int i=0;
-		while(rs.next())
-		{
-			usertype=rs.getString("USERTYPE");
-			System.out.println(usertype);
-			i++;
-			
-		}
-		if(i>0)
-		{
-			HttpSession session1= request.getSession();
-			session1.setAttribute("username",username);
-			session1.setAttribute("usertype",usertype);
-			response.sendRedirect("index.html");
-		}
-		if(i==0)
-		{
-			response.sendRedirect("Login_v3/login.html");
-		}
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+	DatabaseController db = new DatabaseController();
+	int i =db.validateUser(username, password);
+	if(i>0)
+	{
+		HttpSession session1= request.getSession();
+		session1.setAttribute("username",username);
+		session1.setAttribute("usertype",usertype);
+		response.sendRedirect("index.html");
+	}
+	if(i==0)
+	{
+		response.sendRedirect("Login_v3/login.html");
 	}
 	}
 

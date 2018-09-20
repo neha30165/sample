@@ -13,7 +13,7 @@ public class ConnectionProvider {
 			con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		
