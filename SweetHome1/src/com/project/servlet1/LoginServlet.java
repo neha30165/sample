@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.dao.SweetHomeDAO;
+import com.dao.SweetHomeDAOImpl;
 import com.project.utility.ConnectionProvider;
-import com.project.utility.DatabaseController;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 		String password=request.getParameter("password");
 		String usertype = null;
 	Connection con =ConnectionProvider.getConnection();
-	DatabaseController db = new DatabaseController();
+	SweetHomeDAO db = new SweetHomeDAOImpl();
 	int i =db.validateUser(username, password);
 	if(i>0)
 	{

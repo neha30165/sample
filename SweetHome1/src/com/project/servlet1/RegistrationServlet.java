@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dao.SweetHomeDAO;
+import com.dao.SweetHomeDAOImpl;
 import com.project.utility.ConnectionProvider;
-import com.project.utility.DatabaseController;
+
 
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -58,7 +60,7 @@ public class RegistrationServlet extends HttpServlet {
 		}
 		else
 		{
-			DatabaseController db = new DatabaseController();
+			SweetHomeDAO db = new SweetHomeDAOImpl();
 			try {
 				
 				boolean a=db.addUser(fullname, usertype, username, confpassword, contact, email);
